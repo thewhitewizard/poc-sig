@@ -195,15 +195,6 @@ jobs:
 
           echo "Image signature verified!"
 
-      - name: Generate SBOM attestation
-        if: github.event_name != 'pull_request'
-        uses: actions/attest-sbom@v2
-        with:
-          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          subject-digest: ${{ steps.build.outputs.digest }}
-          sbom-path: 'sbom.spdx.json'
-          push-to-registry: true
-
   provenance:
     name: Generate SLSA Provenance
     needs: [build-binary, build-and-sign-image]
